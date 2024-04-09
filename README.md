@@ -5,6 +5,8 @@ Trevor Long
 Tyler Fujikawa
 Zachary Stewart
 
+Release: 1.0 - 4/9/2024
+
 EDUCATIONAL APPLICATION, NOT FOR PRODUCTION USE
 
 An application made to assist a pediatric hospital in paperless operation. Faculty members can perform their daily tasks,

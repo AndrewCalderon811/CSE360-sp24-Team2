@@ -18,6 +18,7 @@ class T1_Tests {
 		assertEquals("Hello World", encryption.decrypt(encryption.encrypt("Hello World")));
 	}
 	
+	
 	@Test
 	void Encrypt2() throws Exception {
 		assertEquals("This is a long String that could be too long\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", encryption.decrypt(encryption.encrypt("This is a long String that could be too long\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")));

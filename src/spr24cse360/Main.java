@@ -7,8 +7,6 @@
 */
 package spr24cse360;
 
-import spr24cse360.Account.UserType;
-
 public class Main {
 
 	public static void main(String[] args) {

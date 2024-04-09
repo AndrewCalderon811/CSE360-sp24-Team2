@@ -14,10 +14,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
 import java.util.regex.Pattern;
 
-import javafx.scene.layout.HBox;
 import spr24cse360.Account.UserType;
 
 
@@ -104,7 +102,7 @@ public class Backend extends StorageDriver {
 		return ret;
 	}
 	
-	public String getPatientInformation(String username, Account account) throws Exception {
+	public String getPatientInformation(Account account) throws Exception {
 		
 		String ret;
 	
@@ -396,7 +394,7 @@ public class Backend extends StorageDriver {
 	
 	
 	
-	public String addNewAccount (String firstName, String lastName, 
+	public String[] addNewAccount (String firstName, String lastName, 
 								  String email,		String contactNumber, 
 								  String address,	int dayOfBirth, 
 								  int monthOfBirth, int yearOfBirth,
@@ -424,6 +422,7 @@ public class Backend extends StorageDriver {
 			e.printStackTrace();
 		}
 		System.out.println(tempPassword);
+		
 		Account newPatient = new Account(username, cipherPassword, 
 								   parsedFirstNameStandard, parsedLastNameStandard, 
 								   monthOfBirth, dayOfBirth,
@@ -434,7 +433,7 @@ public class Backend extends StorageDriver {
 		
 		accounts.put(username, newPatient);
 		
-		return tempPassword;
+		return new String[] {username, tempPassword};
 		
 	}
 	

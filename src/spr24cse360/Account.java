@@ -10,12 +10,6 @@ package spr24cse360;
 import java.io.Serializable;
 import java.util.Stack;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 public class Account implements Serializable {
 	

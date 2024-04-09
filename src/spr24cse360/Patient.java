@@ -18,7 +18,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -174,7 +173,7 @@ public class Patient extends UserInterface {
 		// Gathering Patient Information
 				 
 				try {
-					contactInfoDisplay.setText(getBackend().getPatientInformation(getAccount().getUsername(), getAccount()));
+					contactInfoDisplay.setText(getBackend().getPatientInformation(getAccount()));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -539,7 +538,7 @@ public class Patient extends UserInterface {
 									getBackend().updateContactInformation(getAccount(), newEmail, newPhoneNumber, newAddress);
 			// ---- updates the information on screen.
 									try {
-										contactInfoDisplay.setText(getBackend().getPatientInformation(getAccount().getUsername(), getAccount()));
+										contactInfoDisplay.setText(getBackend().getPatientInformation(getAccount()));
 									} catch (Exception e) {
 										
 										e.printStackTrace();

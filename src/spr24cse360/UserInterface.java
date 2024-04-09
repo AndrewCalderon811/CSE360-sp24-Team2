@@ -18,12 +18,10 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -37,7 +35,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -61,10 +58,8 @@ public class UserInterface {
 	
 	private Font TITLE_FONT = new Font("Inter", 30);
 	private Font SUBTITLE_FONT = new Font("Montserrat", 15);
-	private Font DEEMPHIZIED_FONT = new Font("Poppins", 10);
 	private Font GENERAL_FONT = new Font("Manrope", 10);
 	
-	private LocalDate time = LocalDate.now();
 	
 	
 	public UserInterface(Backend backend, Account account) {
@@ -248,17 +243,26 @@ public class UserInterface {
 		hbox.setSpacing(5);
 		hbox.setPrefHeight(30);
 		Label patientID = new Label(patient.getFullName() + " : " + patient.getBirthdate());
-		Button startExam = new Button("Start");
-		Button remove = new Button("-");
-		hbox.getChildren().addAll(patientID, startExam, remove);
+		Button startExamButton = new Button(); //Used to be "Start"
+		Button removeButton = new Button(); //Used to be "-"
+		
+		Image startExamImage = new Image(getClass().getResourceAsStream("/spr24cse360/icons/Pen.png"), 15, 15, true, true);
+		ImageView startExamView = new ImageView(startExamImage);
+		startExamButton.setGraphic(startExamView);
+		
+		Image removeImage = new Image(getClass().getResourceAsStream("/spr24cse360/icons/Ban.png"), 15, 15, true, true);
+		ImageView removeView = new ImageView(removeImage);
+		removeButton.setGraphic(removeView);
+		
+		hbox.getChildren().addAll(patientID, startExamButton, removeButton);
 		
 		
-		startExam.setOnAction(new EventHandler<>() {
+		startExamButton.setOnAction(new EventHandler<>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 				
-				startExam.setVisible(false);
+				startExamButton.setVisible(false);
 				Stage examinationStage = new Stage();
 				Scene examinationScene = getExam(patient); //ERROR HERE?
 				examinationStage.setTitle("Examination of " + patient.getFullName());
@@ -269,7 +273,7 @@ public class UserInterface {
 					@Override
 					public void handle(WindowEvent arg0) {
 						// TODO Auto-generated method stub
-						startExam.setVisible(true);
+						startExamButton.setVisible(true);
 					}
 					
 				});
@@ -278,7 +282,7 @@ public class UserInterface {
 		});
 		
 		
-		remove.setOnAction(new EventHandler<>() {
+		removeButton.setOnAction(new EventHandler<>() {
 
 			@Override
 			public void handle(ActionEvent event) {
@@ -310,7 +314,12 @@ public class UserInterface {
 			message.setGraphic(messageView);
 		Button info = new Button();
 			info.setGraphic(formView);
-		Button add2Q = new Button("+");
+		Button add2Q = new Button(); //Used to be "+"
+		
+		Image add2QImage = new Image(getClass().getResourceAsStream("/spr24cse360/icons/add.png"), 15, 15, true, true);
+		ImageView add2QView = new ImageView(add2QImage);
+		add2Q.setGraphic(add2QView);
+		
 		if(account.getRole().equals(UserType.NURSE)) {
 			hbox.getChildren().add(add2Q);
 		}
@@ -451,7 +460,7 @@ public class UserInterface {
 	     			
 	     			
 	     			try {
-	     				contactInfo.setText(getBackend().getPatientInformation(patient.getUsername(), getAccount()));
+	     				contactInfo.setText(getBackend().getPatientInformation(patient));
 	     			} catch (Exception e) {
 	     				e.printStackTrace();
 	     			}
@@ -595,84 +604,6 @@ public class UserInterface {
 	}
 	
 	
-	
-	private Scene getExamination() {
-		BorderPane root = new BorderPane();
-		Scene scene = new Scene(root,400,200);
-		Stage examinationStage = new Stage(); 
-		
-		Label weight = new Label("Patient Weight: ");
-		Label height = new Label("Patient Height: ");
-		Label bodyTemp = new Label("Patient Body Temperature: ");
-		Label bloodPressure = new Label("Patient Blood Pressure: ");
-		Label above12 = new Label("Is Patient Above 12?: ");
-		
-		TextField weightTextField = new TextField();
-	    TextField heightField = new TextField();
-	    TextField bodyTempTextField = new TextField();
-	    TextField bloodPressureTextField = new TextField();
-	    CheckBox above12CheckBox = new CheckBox("");
-	    
-		Button save = new Button("Save");
-		 save.setOnAction(new EventHandler<>() {
-	            public void handle(ActionEvent event) {
-	            	String weight = weightTextField.getText();
-	            	String height = heightField.getText();
-	            	String bodyTemp = bodyTempTextField.getText();
-	            	String bloodPressure = bloodPressureTextField.getText();
-	            	boolean above12CheckBoxSelected = above12CheckBox.isSelected(); // gets info
-	            	
-	            	Stage stage = (Stage) save.getScene().getWindow(); //closes window after "Save" is pressed
-					stage.close();
-	            }
-	        });
-		 
-	    weightTextField.setEditable(true); 
-	    weightTextField.setPrefHeight(5);
-	    weightTextField.setPrefWidth(250);	
-	    
-	    heightField.setEditable(true); 
-	    heightField.setPrefHeight(5);
-	    heightField.setPrefWidth(250);	
-	    
-	    bodyTempTextField.setEditable(true); 
-	    bodyTempTextField.setPrefHeight(5);
-	    bodyTempTextField.setPrefWidth(250);	
-	    
-	    bloodPressureTextField.setEditable(true); 
-	    bloodPressureTextField.setPrefHeight(5);
-	    bloodPressureTextField.setPrefWidth(200);	
-		
-		 HBox one = new HBox(10);
-		 HBox two = new HBox(10);
-		 HBox three = new HBox(10);
-		 HBox four = new HBox(10);
-		 HBox five = new HBox(10);
-		 
-		 one.getChildren().addAll(weight, weightTextField);
-			one.setAlignment(Pos.CENTER_LEFT);
-			
-			two.getChildren().addAll(height, heightField);
-			two.setAlignment(Pos.CENTER_LEFT);
-			
-			three.getChildren().addAll(bodyTemp, bodyTempTextField);
-			three.setAlignment(Pos.CENTER_LEFT);
-
-			four.getChildren().addAll(bloodPressure, bloodPressureTextField);
-			four.setAlignment(Pos.CENTER_LEFT);
-			
-			five.getChildren().addAll(above12, above12CheckBox, save);
-			five.setAlignment(Pos.CENTER_LEFT);
-
-			VBox allgin = new VBox(10);
-			allgin.setPadding(new Insets(20, 20, 20, 20));
-			allgin.getChildren().addAll(one, two, three, four, five);
-			
-			root.setCenter(allgin);
-			
-			return scene;
-			
-	}
 	
 	
 	
@@ -1261,12 +1192,15 @@ protected Scene getExam(Account patient) {
 						String verifiedInfo[] = backendptr.verifyNewPatientInfo(first, last, email, phone, address, dayBirth, monthBirth, yearBirth);	
 						
 						if(verifiedInfo[0] == "true") {
-							String tempPassword = backendptr.addNewAccount(first, last, email, phone, address, dayOfBirth.getValue(), monthOfBirth.getValue(), yearOfBirth.getValue(), newAccountType);
+							String[] newUserAndPass = backendptr.addNewAccount(first, last, email, phone, address, dayOfBirth.getValue(), monthOfBirth.getValue(), yearOfBirth.getValue(), newAccountType);
 	
 							error.setVisible(false);
-							if(tempPassword != null) {
-								System.out.println("Here is the generated password: " + tempPassword);
+							if(newUserAndPass != null) {
+								System.out.println("Here is the generated password: " + newUserAndPass[1]);
 								popupStage.close();
+								
+								//popup to show user the name accounts credentials
+								NewAccountPopup.makeNewAccountScene(newUserAndPass[0], newUserAndPass[1], parentScene);
 							}
 							
 						} else {

@@ -7,19 +7,16 @@
 */
 package spr24cse360;
 
-import javafx.event.ActionEvent;
+
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -33,18 +30,13 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import spr24cse360.Account.UserType;
-import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.util.ArrayList;
 
 public class Nurse extends UserInterface {
 	int sidePaneWidth = 300;
@@ -57,12 +49,6 @@ public class Nurse extends UserInterface {
 		super(backend, account);
 	}
 	
-	/*TODO
-	 * patient search red for all
-	 * can doctor interact with active patient?
-	 * nurse messaging system
-	 * syncing active patient between nurse and doctor and backend
-	 */
 	@Override
 	public Scene getScene() {
 		BorderPane root = new BorderPane();

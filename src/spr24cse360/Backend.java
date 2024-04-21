@@ -205,8 +205,8 @@ public class Backend extends StorageDriver {
 	
 	
 	//Patient input verification
-	public static boolean verifyName(String name, int minLength, int maxLength) {
-		String nameRegex = "^[\\p{L} .'-]*[\\p{L}]+$";
+	public boolean verifyName(String name, int minLength, int maxLength) {
+		String nameRegex = "^[\\p{L}.'-]";
 		String lengthAdditive = String.format("{%d,%d}$", minLength, maxLength);
 		nameRegex = nameRegex + lengthAdditive;
                   
@@ -216,10 +216,12 @@ public class Backend extends StorageDriver {
 		return pat.matcher(name).matches(); 
 	}
 	
-	public static boolean verifyAddress(String name, int minLength, int maxLength) {
-		String nameRegex = "^[0-9\\p{L} .'-]*[0-9\\p{L}]+$";
-		String lengthAdditive = String.format("{%d,%d}$", minLength, maxLength);
-		nameRegex = nameRegex + lengthAdditive;
+	public boolean verifyAddress(String name, int minLength, int maxLength) {
+		String nameRegex = "^[0-9\\p{L}.'-]+(\s+[0-9\\p{L}]+)*$";
+
+		if (name.length() < minLength || name.length() > maxLength) {
+			return false;
+		}
                   
 		Pattern pat = Pattern.compile(nameRegex); 
 		if (name == null) 
@@ -228,11 +230,11 @@ public class Backend extends StorageDriver {
 	}
 	
 	//from https://www.geeksforgeeks.org/check-email-address-valid-not-java/
-	public static boolean verifyEmail(String email) {
+	public boolean verifyEmail(String email) {
 		String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+ 
                 "[a-zA-Z0-9_+&*-]+)*@" + 
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" + 
-                "A-Z]{2,7}$"; 
+                "A-Z]{2,7}$";
                   
 		Pattern pat = Pattern.compile(emailRegex); 
 		if (email == null) 
@@ -240,7 +242,7 @@ public class Backend extends StorageDriver {
 		return pat.matcher(email).matches(); 
 	}
 	
-	public static boolean verifyPhoneNumber(String phoneNum) {
+	public boolean verifyPhoneNumber(String phoneNum) {
 		String phoneRegex = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$";
                   
 		Pattern pat = Pattern.compile(phoneRegex); 
@@ -253,25 +255,25 @@ public class Backend extends StorageDriver {
 	//Goes through the order of input, if any is invalid it returns a table with one string containing the appropriate error.
 	
 	//TODO - check if name + birthyear is already taken
-	public String[] verifyNewPatientInfo(String firstName, String lastName, String email, String phoneNum, String address, Integer dayBirth, Integer monthBirth, Integer yearBirth) {
+	public String verifyNewPatientInfo(String firstName, String lastName, String email, String phoneNum, String address, Integer dayBirth, Integer monthBirth, Integer yearBirth) {
 		int maxStringLength = 100;
-		String verifiedTable[] = {"true"};
+		String verifiedString = "true";
 		
 		if (verifyName(firstName, 2, maxStringLength) == false) {
-			verifiedTable[0] = "First Name is not filled out correctly.";
+			verifiedString = "First Name is not filled out correctly.";
 		} else if (verifyName(lastName, 2, maxStringLength) == false) {
-			verifiedTable[0] = "Last Name is not filled out correctly.";
+			verifiedString = "Last Name is not filled out correctly.";
 		} else if (verifyEmail(email) == false) {
-			verifiedTable[0] = "Email is not filled out correctly.";
+			verifiedString = "Email is not filled out correctly.";
 		} else if (verifyPhoneNumber(phoneNum) == false) {
-			verifiedTable[0] = "Phone number is not filled out correctly.";
+			verifiedString = "Phone number is not filled out correctly.";
 		} else if (verifyAddress(address, 2, maxStringLength) == false) {
-			verifiedTable[0] = "Address not filled out correctly";
+			verifiedString = "Address not filled out correctly";
 		} else if (dayBirth == null || monthBirth == null || yearBirth == null) {
-			verifiedTable[0] = "Birthdate is not filled out correctly.";
+			verifiedString = "Birthdate is not filled out correctly.";
 		}
 		
-		return verifiedTable;
+		return verifiedString;
 	}
 	//End patient input verification
 	

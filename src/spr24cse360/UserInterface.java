@@ -960,7 +960,8 @@ protected Scene getExam(Account patient) {
 	// ---- Logout Menu ---- //
 	protected Menu getLogoutMenu(Scene parentScene) {
 		Menu logoutMenu = new Menu("Logout");
-		//Menus will not recognize clicks without a menuitem, so I add a dummy that is hidden
+		//Menus will not recognize clicks without a menuitem,
+		//so I add a dummy that is hidden
 		MenuItem dummyMenuItem = new MenuItem();
 		logoutMenu.getItems().add(dummyMenuItem);
 		
@@ -1189,9 +1190,9 @@ protected Scene getExam(Account patient) {
 						Integer monthBirth = monthOfBirth.getValue();
 						Integer yearBirth = yearOfBirth.getValue();
 						
-						String verifiedInfo[] = backendptr.verifyNewPatientInfo(first, last, email, phone, address, dayBirth, monthBirth, yearBirth);	
+						String verifiedInfo = backendptr.verifyNewPatientInfo(first, last, email, phone, address, dayBirth, monthBirth, yearBirth);	
 						
-						if(verifiedInfo[0] == "true") {
+						if(verifiedInfo == "true") {
 							String[] newUserAndPass = backendptr.addNewAccount(first, last, email, phone, address, dayOfBirth.getValue(), monthOfBirth.getValue(), yearOfBirth.getValue(), newAccountType);
 	
 							error.setVisible(false);
@@ -1204,7 +1205,7 @@ protected Scene getExam(Account patient) {
 							}
 							
 						} else {
-							error.setText(verifiedInfo[0]);
+							error.setText(verifiedInfo);
 							error.setVisible(true);
 						}
 					}
